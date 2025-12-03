@@ -67,9 +67,10 @@ const products: Product[] = [
 interface ProductCatalogProps {
   compareProducts: number[]
   onToggleCompare: (id: number) => void
+  onAddToCart: (product: Product) => void
 }
 
-const ProductCatalog = ({ compareProducts, onToggleCompare }: ProductCatalogProps) => {
+const ProductCatalog = ({ compareProducts, onToggleCompare, onAddToCart }: ProductCatalogProps) => {
   return (
     <section id="catalog" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -126,7 +127,7 @@ const ProductCatalog = ({ compareProducts, onToggleCompare }: ProductCatalogProp
               </CardContent>
 
               <CardFooter className="p-6 pt-0">
-                <Button className="w-full">
+                <Button className="w-full" onClick={() => onAddToCart(product)}>
                   <Icon name="ShoppingCart" size={18} className="mr-2" />
                   В корзину
                 </Button>

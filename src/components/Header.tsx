@@ -2,12 +2,17 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Icon from '@/components/ui/icon'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import Cart, { CartItem } from './Cart'
 
 interface HeaderProps {
   compareCount: number
+  cartItems: CartItem[]
+  onUpdateCartQuantity: (id: number, quantity: number) => void
+  onRemoveCartItem: (id: number) => void
+  onClearCart: () => void
 }
 
-const Header = ({ compareCount }: HeaderProps) => {
+const Header = ({ compareCount, cartItems, onUpdateCartQuantity, onRemoveCartItem, onClearCart }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const scrollToSection = (id: string) => {
@@ -61,6 +66,13 @@ const Header = ({ compareCount }: HeaderProps) => {
               Сравнить ({compareCount})
             </Button>
           )}
+
+          <Cart 
+            items={cartItems}
+            onUpdateQuantity={onUpdateCartQuantity}
+            onRemoveItem={onRemoveCartItem}
+            onClearCart={onClearCart}
+          />
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
