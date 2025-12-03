@@ -1,14 +1,50 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react'
+import Header from '@/components/Header'
+import Hero from '@/components/Hero'
+import ProductCatalog from '@/components/ProductCatalog'
+import CompareProducts from '@/components/CompareProducts'
+import About from '@/components/About'
+import Blog from '@/components/Blog'
+import Reviews from '@/components/Reviews'
+import FAQ from '@/components/FAQ'
+import Delivery from '@/components/Delivery'
+import Contact from '@/components/Contact'
+import Footer from '@/components/Footer'
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
-      </div>
-    </div>
-  );
-};
+  const [compareProducts, setCompareProducts] = useState<number[]>([])
 
-export default Index;
+  const toggleCompare = (productId: number) => {
+    setCompareProducts(prev => 
+      prev.includes(productId) 
+        ? prev.filter(id => id !== productId)
+        : prev.length < 3 ? [...prev, productId] : prev
+    )
+  }
+
+  return (
+    <div className="min-h-screen">
+      <Header compareCount={compareProducts.length} />
+      <Hero />
+      <ProductCatalog 
+        compareProducts={compareProducts}
+        onToggleCompare={toggleCompare}
+      />
+      {compareProducts.length > 0 && (
+        <CompareProducts 
+          productIds={compareProducts}
+          onClearCompare={() => setCompareProducts([])}
+        />
+      )}
+      <About />
+      <Blog />
+      <Reviews />
+      <FAQ />
+      <Delivery />
+      <Contact />
+      <Footer />
+    </div>
+  )
+}
+
+export default Index
